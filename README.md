@@ -192,7 +192,9 @@ change the tile URLs in `assets/app.js` to a commercial tile provider.
 
 All rights reserved. The source is public so you can read it and contribute
 to it. You may fork it only to prepare pull requests to this repository. Any
-other use, hosting or redistribution needs written permission. By submitting
+other use needs prior written permission, including hosting, redistribution,
+screenshots, presentations, public display and embedding the map. To ask,
+[open an issue](https://github.com/andrejska/riga-parking/issues/new). By submitting
 a contribution, you license it to the project owner. See [LICENSE](LICENSE)
 for the full terms.
 
