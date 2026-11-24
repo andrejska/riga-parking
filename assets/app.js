@@ -3,8 +3,8 @@
   "use strict";
 
   const LATEST = "latest";
-  const TYPE_LABEL = { "underground": "Underground", "multi-storey": "Multi-storey" };
-  const TYPE_LETTER = { "underground": "U", "multi-storey": "M" };
+  const TYPE_LABEL = { "underground": "Underground", "multi-storey": "Multi-storey", "covered": "Covered" };
+  const TYPE_LETTER = { "underground": "U", "multi-storey": "M", "covered": "C" };
 
   const state = {
     parkings: [],          // from parkings.json
@@ -12,6 +12,8 @@
     dates: [],             // distinct observation dates, newest first
     selected: LATEST,
     markers: new Map(),    // parking_id -> L.Marker
+    hoverId: null,         // hovered/focused in the list or on the map
+    activeId: null,        // popup open
   };
 
   // ---------- helpers ----------
@@ -120,7 +122,7 @@
 
   function markerIcon(p, obs) {
     const lvl = level(pctOf(p, obs));
-    const cls = `pk-marker ${p.type === "underground" ? "underground" : "multi"} ${lvl}`;
+    const cls = `pk-marker ${p.type} ${lvl}`;
     return L.divIcon({
       className: "",
       html: `<div class="${cls}" title="${esc(p.name)}">${TYPE_LETTER[p.type] || "P"}</div>`,
@@ -233,6 +235,81 @@
   function render() {
     renderList();
     renderMarkers();
+    applyHighlight();
+  }
+
+  // ---------- list <-> map highlighting ----------
+  /** Mark the hovered and open car park in both the list and on the map. */
+  function applyHighlight() {
+    for (const [id, m] of state.markers) {
+      const on = id === state.hoverId || id === state.activeId;
+      m.getElement()?.querySelector(".pk-marker")?.classList.toggle("hl", on);
+      m.setZIndexOffset(on ? 1000 : 0);
+    }
+    for (const btn of $list.querySelectorAll("button[data-id]")) {
+      btn.classList.toggle("hl", btn.dataset.id === state.hoverId);
+      btn.classList.toggle("active", btn.dataset.id === state.activeId);
+    }
+  }
+
+  function setHover(id) {
+    if (state.hoverId === id) return;
+    state.hoverId = id;
+    applyHighlight();
+  }
+
+  $list.addEventListener("mouseover", (e) => {
+    const btn = e.target.closest("button[data-id]");
+    setHover(btn ? btn.dataset.id : null);
+  });
+  $list.addEventListener("mouseleave", () => setHover(null));
+  $list.addEventListener("focusin", (e) => {
+    const btn = e.target.closest("button[data-id]");
+    if (btn) setHover(btn.dataset.id);
+  });
+  $list.addEventListener("focusout", () => setHover(null));
+
+  // ---------- soften the map outside the railway loop ----------
+  /**
+   * A full-viewport element in its own pane (above tiles, below the boundary line and markers),
+   * blurred with backdrop-filter and clipped to "viewport minus boundary polygon" (even-odd).
+   * Repositioned on every move; during zoom animation it is scaled like Leaflet's own overlays.
+   */
+  function addOutsideMask(boundary) {
+    if (!(window.CSS && CSS.supports("clip-path", 'path(evenodd, "M0 0H1V1Z")'))) return;
+    const rings = [];
+    L.geoJSON(boundary).eachLayer((layer) => {
+      const lls = layer.getLatLngs();
+      // Polygon -> [ring...]; MultiPolygon -> [[ring...]...]; we only need the outer rings.
+      (Array.isArray(lls[0][0]) ? lls.map((poly) => poly[0]) : [lls[0]]).forEach((r) => rings.push(r));
+    });
+    if (!rings.length) return;
+
+    map.createPane("outside");
+    map.getPane("outside").style.zIndex = 250;
+    const el = L.DomUtil.create("div", "outside-mask leaflet-zoom-animated", map.getPane("outside"));
+
+    function update() {
+      const size = map.getSize();
+      const origin = map.containerPointToLayerPoint([0, 0]);
+      L.DomUtil.setPosition(el, origin);
+      el.style.width = `${size.x}px`;
+      el.style.height = `${size.y}px`;
+      const holes = rings.map((ring) => "M" + ring.map((ll) => {
+        const p = map.latLngToLayerPoint(ll).subtract(origin);
+        return `${p.x.toFixed(1)} ${p.y.toFixed(1)}`;
+      }).join("L") + "Z").join("");
+      el.style.clipPath = `path(evenodd, "M0 0H${size.x}V${size.y}H0Z${holes}")`;
+    }
+
+    map.on("move zoomend viewreset resize", update);
+    map.on("zoomanim", (e) => {
+      // Same technique as L.ImageOverlay: animate to where the top-left corner will be.
+      const scale = map.getZoomScale(e.zoom);
+      const offset = map._latLngToNewLayerPoint(map.containerPointToLatLng([0, 0]), e.zoom, e.center);
+      L.DomUtil.setTransform(el, offset, scale);
+    });
+    update();
   }
 
   $select.addEventListener("change", () => {
@@ -265,9 +342,10 @@
     if (boundary) {
       const layer = L.geoJSON(boundary, {
         interactive: false,
-        style: { color: "#2557d6", weight: 2, dashArray: "6 6", fillColor: "#2557d6", fillOpacity: 0.04 },
+        style: { color: "#2557d6", weight: 2, dashArray: "6 6", fill: false },
       }).addTo(map);
       map.fitBounds(layer.getBounds(), { padding: [10, 10] });
+      addOutsideMask(boundary);
     }
 
     state.parkings = parkings.slice().sort((a, b) => a.name.localeCompare(b.name, "lv"));
@@ -296,6 +374,17 @@
           // Keep the popup inside short maps (phones); it scrolls instead of being clipped.
           maxHeight: Math.max(220, Math.round(map.getSize().y * 0.75)),
           autoPanPadding: [16, 16],
+        })
+        .on("mouseover", () => setHover(p.id))
+        .on("mouseout", () => setHover(null))
+        .on("popupopen", () => {
+          state.activeId = p.id;
+          applyHighlight();
+          $list.querySelector(`button[data-id="${CSS.escape(p.id)}"]`)?.scrollIntoView({ block: "nearest" });
+        })
+        .on("popupclose", () => {
+          if (state.activeId === p.id) state.activeId = null;
+          applyHighlight();
         })
         .addTo(map);
       state.markers.set(p.id, m);

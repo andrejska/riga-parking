@@ -1,8 +1,12 @@
 # Rīga centre parking
 
-A map of underground and multi-storey car parks in central Rīga, inside the
-railway loop. Click a car park to see its capacity and how many cars were
-parked there on the dates you recorded.
+A map of underground, multi-storey and covered car parks in central Rīga,
+inside the railway loop. Click a car park to see its capacity and how many
+cars were parked there on the dates you recorded.
+
+The map dims and blurs everything outside the loop. Hovering a car park in
+the list highlights its marker on the map, and hovering a marker highlights
+its row in the list.
 
 It's a static site with no build step, backend or database. The data is two
 plain files that you edit by hand.
@@ -90,7 +94,8 @@ Add an object to `data/parkings.json`:
 
 - `id` must be lowercase-with-dashes and unique. Observations refer to it, so
   don't change it once you've recorded counts.
-- `type` is `underground` or `multi-storey`.
+- `type` is `underground` (round **U** marker), `multi-storey` (**M**) or
+  `covered` (**C**, a roofed car park at ground level, e.g. under a building).
 - `capacity` is a whole number, or `null` if unknown.
 - Coordinates: right-click a spot on openstreetmap.org and choose
   *Show address*, or copy them from Google Maps.
@@ -109,12 +114,16 @@ observations and a car park outside the boundary.
 
 ## About the starting data
 
-The 11 car parks come from OpenStreetMap features tagged
+11 of the car parks come from OpenStreetMap features tagged
 `amenity=parking` + `parking=underground|multi-storey` with public or customer
 access. Each one was matched to an address. Private residential and hotel-guest
 garages were left out.
 
-**Capacity is known for only 3 of them**, and each entry's `notes` and
+The 12th is the **BTA Daugava Athletics Arena** (Augšiela 1), added by hand.
+Its operator (LNSC) describes covered parking on part of the arena's ground
+floor, near the service entrance, and publishes no space count.
+
+**Capacity is known for only 3 of the 12**, and each entry's `notes` and
 `sources` say where the figure came from:
 
 | car park            | capacity | source                                         |

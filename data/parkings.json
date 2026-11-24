@@ -103,6 +103,23 @@
     "notes": ""
   },
   {
+    "id": "bta-daugava-arena",
+    "name": "BTA Daugava Athletics Arena",
+    "type": "covered",
+    "address": "Augšiela 1",
+    "lat": 56.95353,
+    "lon": 24.15721,
+    "capacity": null,
+    "operator": "Latvijas Nacionālais sporta centrs",
+    "access": "unknown",
+    "sources": [
+      "https://www.openstreetmap.org/way/1206861265",
+      "https://www.lnsc.lv/sports-centers/bta-daugava-athletics-arena/",
+      "https://www.latarh.lv/awards/daugava-stadium-multifunctional-athletics-arena"
+    ],
+    "notes": "Covered car park on part of the arena's ground floor, near the service entrance. Capacity not published."
+  },
+  {
     "id": "gertrudes-10",
     "name": "Ģertrūdes iela 10",
     "type": "multi-storey",

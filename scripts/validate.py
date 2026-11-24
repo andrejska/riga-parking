@@ -13,7 +13,7 @@ from datetime import date
 from pathlib import Path
 
 DATA = Path(__file__).resolve().parent.parent / "data"
-TYPES = {"underground", "multi-storey"}
+TYPES = {"underground", "multi-storey", "covered"}
 ID_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 TIME_RE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
 
