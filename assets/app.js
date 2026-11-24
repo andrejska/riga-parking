@@ -289,16 +289,24 @@
     map.getPane("outside").style.zIndex = 250;
     const el = L.DomUtil.create("div", "outside-mask leaflet-zoom-animated", map.getPane("outside"));
 
+    const PAD = 64; // px margin around the viewport, so clip edges never show inside it
+
     function update() {
       const size = map.getSize();
       const origin = map.containerPointToLayerPoint([0, 0]);
       L.DomUtil.setPosition(el, origin);
       el.style.width = `${size.x}px`;
       el.style.height = `${size.y}px`;
-      const holes = rings.map((ring) => "M" + ring.map((ll) => {
-        const p = map.latLngToLayerPoint(ll).subtract(origin);
-        return `${p.x.toFixed(1)} ${p.y.toFixed(1)}`;
-      }).join("L") + "Z").join("");
+      // Clip the boundary to the (padded) viewport first. When zoomed in, the raw polygon spans
+      // tens of thousands of pixels, and browsers then mis-render the even-odd hole (the whole
+      // view turned blurry). Clipped, coordinates stay small at every zoom level.
+      const view = L.bounds([-PAD, -PAD], [size.x + PAD, size.y + PAD]);
+      const holes = rings.map((ring) => {
+        const pts = ring.map((ll) => map.latLngToLayerPoint(ll).subtract(origin));
+        const clipped = L.PolyUtil.clipPolygon(pts, view);
+        return clipped.length < 3 ? "" :
+          "M" + clipped.map((p) => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join("L") + "Z";
+      }).join("");
       el.style.clipPath = `path(evenodd, "M0 0H${size.x}V${size.y}H0Z${holes}")`;
     }
 
