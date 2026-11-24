@@ -121,7 +121,7 @@ observations and a car park outside the boundary.
 access. Each one was matched to an address. Private residential and hotel-guest
 garages were left out.
 
-Four more were added by hand:
+Three more were added by hand:
 
 - **BTA Daugava Athletics Arena** (Augšiela 1). Its operator (LNSC) describes
   covered parking on part of the arena's ground floor, near the service
@@ -129,10 +129,8 @@ Four more were added by hand:
 - **Radisson Blu Hotel Latvija**: underground, entrance from Baznīcas iela 7.
 - **Radisson Blu Elizabete Hotel**: underground, entrance from Elizabetes
   iela 73, operated by SNABB.
-- **Rietumu Capital Centre**: a multi-level garage entered from Grostonas
-  iela. OSM tags it private, so its access is marked unconfirmed.
 
-**Capacity is known for only 4 of the 15**, and each entry's `notes` and
+**Capacity is known for only 4 of the 14**, and each entry's `notes` and
 `sources` say where the figure came from:
 
 | car park            | capacity | source                                         |

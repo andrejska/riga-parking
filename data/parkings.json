@@ -218,21 +218,5 @@
       "https://www.radissonhotels.com/en-us/hotels/radisson-blu-riga-elizabete/contact"
     ],
     "notes": "Underground garage operated by SNABB (per booking listings). Trip.com lists it as open to non-guests (about EUR 15/day); hotel guests pay EUR 19/night. Spaces are limited."
-  },
-  {
-    "id": "rietumu-capital-centre",
-    "name": "Rietumu Capital Centre",
-    "type": "multi-storey",
-    "address": "Vesetas iela 7 (entrance from Grostonas iela)",
-    "lat": 56.96476,
-    "lon": 24.12125,
-    "capacity": null,
-    "operator": null,
-    "access": "unconfirmed",
-    "sources": [
-      "https://www.openstreetmap.org/way/150420646",
-      "https://skanste.lv/en/offices/rietumu-capital-centre"
-    ],
-    "notes": "Indoor garage of several levels at the Rietumu Banka complex. OpenStreetMap tags it private; public access not confirmed."
   }
 ]
