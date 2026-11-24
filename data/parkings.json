@@ -1,0 +1,160 @@
+[
+  {
+    "id": "jekaba-arkade",
+    "name": "Jēkaba Arkāde",
+    "type": "multi-storey",
+    "address": "Z. A. Meierovica bulvāris 8",
+    "lat": 56.95184,
+    "lon": 24.10781,
+    "capacity": 300,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": ["https://www.openstreetmap.org/way/87493962"],
+    "notes": "Capacity from OpenStreetMap."
+  },
+  {
+    "id": "kongresu-nams",
+    "name": "Kongresu nams underground",
+    "type": "underground",
+    "address": "Krišjāņa Valdemāra iela 5A",
+    "lat": 56.95556,
+    "lon": 24.10777,
+    "capacity": null,
+    "operator": "Rīgas satiksme",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/way/124824629",
+      "https://rigassatiksme.lv/en/current%20information/underground-parking-at-kr-valdemara-street-5a-cuts-tariffs"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "galleria-riga",
+    "name": "Galleria Riga",
+    "type": "underground",
+    "address": "Dzirnavu iela 67",
+    "lat": 56.95439,
+    "lon": 24.12050,
+    "capacity": 120,
+    "operator": "Galleria Riga",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/node/2427902178",
+      "https://galleriariga.lv/en/visit-us"
+    ],
+    "notes": "Two underground levels. Capacity is the shopping centre's own \"about 120 spaces\"."
+  },
+  {
+    "id": "origo",
+    "name": "Origo",
+    "type": "underground",
+    "address": "Stacijas laukums 2",
+    "lat": 56.94780,
+    "lon": 24.12156,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/node/30694231",
+      "https://origo.lv/en/amenity-type/access"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "origo-one",
+    "name": "Origo One",
+    "type": "underground",
+    "address": "Satekles iela 2B",
+    "lat": 56.94718,
+    "lon": 24.12281,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": ["https://www.openstreetmap.org/node/7896181766"],
+    "notes": ""
+  },
+  {
+    "id": "marijas-2",
+    "name": "Marijas iela 2 underground",
+    "type": "underground",
+    "address": "Marijas iela 2A",
+    "lat": 56.94839,
+    "lon": 24.12284,
+    "capacity": 270,
+    "operator": null,
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/node/11888680654",
+      "https://neighborhood.lv/?p=9650"
+    ],
+    "notes": "Opposite Origo. Capacity (270 cars) from neighborhood.lv, not confirmed by the operator."
+  },
+  {
+    "id": "stockmann",
+    "name": "Stockmann",
+    "type": "underground",
+    "address": "13. janvāra iela 8",
+    "lat": 56.94629,
+    "lon": 24.11795,
+    "capacity": null,
+    "operator": "Stockmann",
+    "access": "public",
+    "sources": ["https://www.openstreetmap.org/node/428039024"],
+    "notes": ""
+  },
+  {
+    "id": "gertrudes-10",
+    "name": "Ģertrūdes iela 10",
+    "type": "multi-storey",
+    "address": "Ģertrūdes iela 10",
+    "lat": 56.95749,
+    "lon": 24.12183,
+    "capacity": null,
+    "operator": null,
+    "access": "public",
+    "sources": ["https://www.openstreetmap.org/node/494257383"],
+    "notes": ""
+  },
+  {
+    "id": "lielgabalu-4",
+    "name": "EuroPark Lielgabalu",
+    "type": "multi-storey",
+    "address": "Lielgabalu iela 4",
+    "lat": 56.95865,
+    "lon": 24.13440,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": ["https://www.openstreetmap.org/way/113550937"],
+    "notes": ""
+  },
+  {
+    "id": "place-11",
+    "name": "Place 11",
+    "type": "multi-storey",
+    "address": "Sporta iela 11",
+    "lat": 56.96502,
+    "lon": 24.11782,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": ["https://www.openstreetmap.org/way/626861465"],
+    "notes": ""
+  },
+  {
+    "id": "grostonas-1",
+    "name": "EuroPark Grostonas",
+    "type": "multi-storey",
+    "address": "Grostonas iela 1",
+    "lat": 56.96457,
+    "lon": 24.11864,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/way/626861483",
+      "https://www.openstreetmap.org/way/828092965"
+    ],
+    "notes": ""
+  }
+]
