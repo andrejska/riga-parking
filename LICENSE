@@ -1,0 +1,22 @@
+Copyright (c) 2026 Andrejs Kalnačs. All rights reserved.
+
+Exceptions: files containing or derived from OpenStreetMap data
+(data/boundary.geojson and OpenStreetMap-sourced entries in
+data/parkings.json) are © OpenStreetMap contributors and licensed under the
+Open Database License (ODbL) 1.0. That license governs them, not this one.
+
+1. Permitted use. You may view the source in this repository and create a
+   fork or local copy solely to prepare contributions (e.g. pull requests)
+   to this repository. No other use, copying, modification, hosting,
+   publication or distribution is permitted without prior written
+   permission from the copyright holder.
+
+2. Contributions. By submitting a contribution (code, data, documentation
+   or other material) to this repository, you grant the copyright holder a
+   perpetual, worldwide, irrevocable, royalty-free licence to use, modify,
+   sublicense and distribute it under any terms, and you confirm that you
+   have the right to grant this licence.
+
+3. No warranty. The software and data are provided "as is", without
+   warranty of any kind. The copyright holder is not liable for any claim
+   or damages arising from their use.
