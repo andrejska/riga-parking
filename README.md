@@ -97,6 +97,8 @@ Add an object to `data/parkings.json`:
 - `type` is `underground` (round **U** marker), `multi-storey` (**M**) or
   `covered` (**C**, a roofed car park at ground level, e.g. under a building).
 - `capacity` is a whole number, or `null` if unknown.
+- `access` is `public`, `customers` or `private`. Anything else, such as
+  `unconfirmed`, shows as "Not confirmed" in the popup.
 - Coordinates: right-click a spot on openstreetmap.org and choose
   *Show address*, or copy them from Google Maps.
 
@@ -119,15 +121,23 @@ observations and a car park outside the boundary.
 access. Each one was matched to an address. Private residential and hotel-guest
 garages were left out.
 
-The 12th is the **BTA Daugava Athletics Arena** (Augšiela 1), added by hand.
-Its operator (LNSC) describes covered parking on part of the arena's ground
-floor, near the service entrance, and publishes no space count.
+Four more were added by hand:
 
-**Capacity is known for only 3 of the 12**, and each entry's `notes` and
+- **BTA Daugava Athletics Arena** (Augšiela 1). Its operator (LNSC) describes
+  covered parking on part of the arena's ground floor, near the service
+  entrance, and publishes no space count.
+- **Radisson Blu Hotel Latvija**: underground, entrance from Baznīcas iela 7.
+- **Radisson Blu Elizabete Hotel**: underground, entrance from Elizabetes
+  iela 73, operated by SNABB.
+- **Rietumu Capital Centre**: a multi-level garage entered from Grostonas
+  iela. OSM tags it private, so its access is marked unconfirmed.
+
+**Capacity is known for only 4 of the 15**, and each entry's `notes` and
 `sources` say where the figure came from:
 
 | car park            | capacity | source                                         |
 |---------------------|---------:|------------------------------------------------|
+| Kongresu nams       |      317 | rigassatiksme.lv (operator)                    |
 | Jēkaba Arkāde       |      300 | OpenStreetMap `capacity` tag                   |
 | Marijas iela 2      |      270 | neighborhood.lv article (not operator-confirmed) |
 | Galleria Riga       |    ~120 | galleriariga.lv ("about 120 spaces")           |

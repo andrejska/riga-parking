@@ -9,24 +9,26 @@
     "capacity": 300,
     "operator": "EuroPark",
     "access": "public",
-    "sources": ["https://www.openstreetmap.org/way/87493962"],
+    "sources": [
+      "https://www.openstreetmap.org/way/87493962"
+    ],
     "notes": "Capacity from OpenStreetMap."
   },
   {
     "id": "kongresu-nams",
     "name": "Kongresu nams underground",
     "type": "underground",
-    "address": "Krišjāņa Valdemāra iela 5A",
+    "address": "Krišjāņa Valdemāra iela 5A (entrance from Kalpaka bulvāris)",
     "lat": 56.95556,
     "lon": 24.10777,
-    "capacity": null,
+    "capacity": 317,
     "operator": "Rīgas satiksme",
     "access": "public",
     "sources": [
       "https://www.openstreetmap.org/way/124824629",
-      "https://rigassatiksme.lv/en/current%20information/underground-parking-at-kr-valdemara-street-5a-cuts-tariffs"
+      "https://www.rigassatiksme.lv/lv/pakalpojumi/autostavvietu-pakalpojumi/apakszemes-stavvieta/"
     ],
-    "notes": ""
+    "notes": "Capacity from Rīgas satiksme: 317 places plus marked places for people with reduced mobility. EUR 2/hour 08:00-23:00, EUR 3 overnight, max EUR 18 per 24 h."
   },
   {
     "id": "galleria-riga",
@@ -34,7 +36,7 @@
     "type": "underground",
     "address": "Dzirnavu iela 67",
     "lat": 56.95439,
-    "lon": 24.12050,
+    "lon": 24.1205,
     "capacity": 120,
     "operator": "Galleria Riga",
     "access": "public",
@@ -49,7 +51,7 @@
     "name": "Origo",
     "type": "underground",
     "address": "Stacijas laukums 2",
-    "lat": 56.94780,
+    "lat": 56.9478,
     "lon": 24.12156,
     "capacity": null,
     "operator": "EuroPark",
@@ -70,7 +72,9 @@
     "capacity": null,
     "operator": "EuroPark",
     "access": "public",
-    "sources": ["https://www.openstreetmap.org/node/7896181766"],
+    "sources": [
+      "https://www.openstreetmap.org/node/7896181766"
+    ],
     "notes": ""
   },
   {
@@ -99,7 +103,9 @@
     "capacity": null,
     "operator": "Stockmann",
     "access": "public",
-    "sources": ["https://www.openstreetmap.org/node/428039024"],
+    "sources": [
+      "https://www.openstreetmap.org/node/428039024"
+    ],
     "notes": ""
   },
   {
@@ -129,7 +135,9 @@
     "capacity": null,
     "operator": null,
     "access": "public",
-    "sources": ["https://www.openstreetmap.org/node/494257383"],
+    "sources": [
+      "https://www.openstreetmap.org/node/494257383"
+    ],
     "notes": ""
   },
   {
@@ -138,11 +146,13 @@
     "type": "multi-storey",
     "address": "Lielgabalu iela 4",
     "lat": 56.95865,
-    "lon": 24.13440,
+    "lon": 24.1344,
     "capacity": null,
     "operator": "EuroPark",
     "access": "public",
-    "sources": ["https://www.openstreetmap.org/way/113550937"],
+    "sources": [
+      "https://www.openstreetmap.org/way/113550937"
+    ],
     "notes": ""
   },
   {
@@ -155,7 +165,9 @@
     "capacity": null,
     "operator": "EuroPark",
     "access": "public",
-    "sources": ["https://www.openstreetmap.org/way/626861465"],
+    "sources": [
+      "https://www.openstreetmap.org/way/626861465"
+    ],
     "notes": ""
   },
   {
@@ -173,5 +185,54 @@
       "https://www.openstreetmap.org/way/828092965"
     ],
     "notes": ""
+  },
+  {
+    "id": "radisson-latvija",
+    "name": "Radisson Blu Hotel Latvija",
+    "type": "underground",
+    "address": "Baznīcas iela 7 (entrance)",
+    "lat": 56.95576,
+    "lon": 24.11797,
+    "capacity": null,
+    "operator": "Radisson Blu Hotel Latvija",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/node/2820185609",
+      "https://www.radissonhotels.com/en-us/hotels/radisson-blu-conference-riga-latvija-spa/contact"
+    ],
+    "notes": "Car park under the hotel (Elizabetes iela 55), entrance from Baznīcas iela 7. Public use per local report; Radisson lists it as paid guest parking."
+  },
+  {
+    "id": "radisson-elizabete",
+    "name": "Radisson Blu Elizabete Hotel",
+    "type": "underground",
+    "address": "Elizabetes iela 73",
+    "lat": 56.95196,
+    "lon": 24.12052,
+    "capacity": null,
+    "operator": "SNABB",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/node/4396671402",
+      "https://uk.trip.com/hotels/riga-hotel-detail-2919102/radisson-blu-elizabete-hotel-riga",
+      "https://www.radissonhotels.com/en-us/hotels/radisson-blu-riga-elizabete/contact"
+    ],
+    "notes": "Underground garage operated by SNABB (per booking listings). Trip.com lists it as open to non-guests (about EUR 15/day); hotel guests pay EUR 19/night. Spaces are limited."
+  },
+  {
+    "id": "rietumu-capital-centre",
+    "name": "Rietumu Capital Centre",
+    "type": "multi-storey",
+    "address": "Vesetas iela 7 (entrance from Grostonas iela)",
+    "lat": 56.96476,
+    "lon": 24.12125,
+    "capacity": null,
+    "operator": null,
+    "access": "unconfirmed",
+    "sources": [
+      "https://www.openstreetmap.org/way/150420646",
+      "https://skanste.lv/en/offices/rietumu-capital-centre"
+    ],
+    "notes": "Indoor garage of several levels at the Rietumu Banka complex. OpenStreetMap tags it private; public access not confirmed."
   }
 ]

@@ -70,6 +70,11 @@
     return list.find((o) => o.date === state.selected) || null;   // newest time that day
   }
 
+  function accessLabel(access) {
+    const known = { public: "Public", customers: "Customers only", private: "Private" };
+    return known[access] ? esc(known[access]) : '<span class="muted">Not confirmed</span>';
+  }
+
   function pctOf(p, obs) {
     return obs && p.capacity ? Math.round((obs.parked / p.capacity) * 100) : null;
   }
@@ -176,6 +181,7 @@
         <dt>Type</dt><dd>${esc(TYPE_LABEL[p.type] || p.type)}</dd>
         <dt>Capacity</dt><dd>${p.capacity != null ? p.capacity + " spaces" : '<span class="muted">unknown</span>'}</dd>
         ${p.operator ? `<dt>Operator</dt><dd>${esc(p.operator)}</dd>` : ""}
+        <dt>Access</dt><dd>${accessLabel(p.access)}</dd>
       </dl>
       ${reading}
       ${history}
