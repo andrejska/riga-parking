@@ -218,5 +218,38 @@
       "https://www.radissonhotels.com/en-us/hotels/radisson-blu-riga-elizabete/contact"
     ],
     "notes": "Underground garage operated by SNABB (per booking listings). Trip.com lists it as open to non-guests (about EUR 15/day); hotel guests pay EUR 19/night. Spaces are limited."
+  },
+  {
+    "id": "barona-centrs",
+    "name": "Barona centrs",
+    "type": "underground",
+    "address": "Krišjāņa Barona iela 46 (corner of Ģertrūdes iela)",
+    "lat": 56.95409,
+    "lon": 24.12768,
+    "capacity": null,
+    "operator": "SNABB",
+    "access": "public",
+    "sources": [
+      "https://snabb.xyz/lv/autovaditajiem/snabb-stavvietas-latvija/",
+      "https://www.openstreetmap.org/way/94131527"
+    ],
+    "notes": "Underground car park of the Barona centrs shopping centre, SNABB zone S7: EUR 2/hour, EUR 12/24 h, EUR 150/month. Number-plate recognition, no tickets; pay in the Snabb or Mobilly app. Pedestrian doors open 08:00-23:00; outside those hours the garage gates open from the app. Capacity not published."
+  },
+  {
+    "id": "verde",
+    "name": "VERDE office complex",
+    "type": "underground",
+    "address": "Roberta Hirša iela 1",
+    "lat": 56.96326,
+    "lon": 24.11324,
+    "capacity": null,
+    "operator": "SNABB",
+    "access": "public",
+    "sources": [
+      "https://snabb.xyz/lv/autovaditajiem/snabb-stavvietas-latvija/",
+      "https://verde.lv/parking",
+      "https://www.openstreetmap.org/way/1493875582"
+    ],
+    "notes": "Underground car park of the VERDE office complex in Skanste, SNABB zone VERDE: first 15 min free, then EUR 2.50/hour, EUR 15/24 h; evening pass (Mon-Fri 18:00-08:00 plus weekends) EUR 40/month. No barrier: prepay in the Snabb or Mobilly app, at verde.snabb.lv or at the machine on site. A screen outside shows free spaces. ELEPORT EV charging customers get 1 h free. Capacity not published. SNABB also runs a surface car park at the same address (zone S9), which isn't on this map."
   }
 ]
