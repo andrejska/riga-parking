@@ -187,3 +187,16 @@ Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright)
 contributors, ODbL. Esri basemap tiles © Esri and its data providers. OSM's
 tile servers are fine for a low-traffic personal site. For heavier use,
 change the tile URLs in `assets/app.js` to a commercial tile provider.
+
+## License
+
+All rights reserved. The source is public so you can read it and contribute
+to it. You may fork it only to prepare pull requests to this repository. Any
+other use, hosting or redistribution needs written permission. By submitting
+a contribution, you license it to the project owner. See [LICENSE](LICENSE)
+for the full terms.
+
+The OpenStreetMap-derived data (`data/boundary.geojson` and the OSM-sourced
+entries in `data/parkings.json`) is not covered by this. It stays under the
+[ODbL](https://opendatacommons.org/licenses/odbl/), © OpenStreetMap
+contributors.
