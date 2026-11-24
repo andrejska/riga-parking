@@ -251,5 +251,21 @@
       "https://www.openstreetmap.org/way/1493875582"
     ],
     "notes": "Underground car park of the VERDE office complex in Skanste, SNABB zone VERDE: first 15 min free, then EUR 2.50/hour, EUR 15/24 h; evening pass (Mon-Fri 18:00-08:00 plus weekends) EUR 40/month. No barrier: prepay in the Snabb or Mobilly app, at verde.snabb.lv or at the machine on site. A screen outside shows free spaces. ELEPORT EV charging customers get 1 h free. Capacity not published. SNABB also runs a surface car park at the same address (zone S9), which isn't on this map."
+  },
+  {
+    "id": "radisson-ridzene",
+    "name": "Radisson Blu Rīdzene",
+    "type": "underground",
+    "address": "Reimersa iela 1 (entrance from Kalpaka bulvāris)",
+    "lat": 56.95342,
+    "lon": 24.11276,
+    "capacity": null,
+    "operator": "SNABB",
+    "access": "public",
+    "sources": [
+      "https://snabb.xyz/lv/autovaditajiem/snabb-stavvietas-latvija/",
+      "https://www.openstreetmap.org/node/14142162411"
+    ],
+    "notes": "Garage under the Radisson Blu Rīdzene hotel, SNABB zone S17: EUR 2.50/hour, EUR 21/24 h. Formerly for hotel guests only; SNABB says it is now open to everyone. Pay in the Snabb or Mobilly app (hotel guests can pay at reception). Driveway entrance off Kalpaka bulvāris, max height 2 m (per OSM). Capacity not published."
   }
 ]

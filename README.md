@@ -123,7 +123,7 @@ observations and a car park outside the boundary.
 access. Each one was matched to an address. Private residential and hotel-guest
 garages were left out.
 
-Five more were added by hand:
+Six more were added by hand:
 
 - **BTA Daugava Athletics Arena** (Augšiela 1). Its operator (LNSC) describes
   covered parking on part of the arena's ground floor, near the service
@@ -135,8 +135,10 @@ Five more were added by hand:
   underground car park, operated by SNABB.
 - **VERDE office complex** (Roberta Hirša iela 1, Skanste): underground,
   operated by SNABB. SNABB's surface car park at the same address is left out.
+- **Radisson Blu Rīdzene** (Reimersa iela 1): underground, entrance from
+  Kalpaka bulvāris, operated by SNABB. It used to be for hotel guests only.
 
-**Capacity is known for only 4 of the 16**, and each entry's `notes` and
+**Capacity is known for only 4 of the 17**, and each entry's `notes` and
 `sources` say where the figure came from:
 
 | car park            | capacity | source                                         |
