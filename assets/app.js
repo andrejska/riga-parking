@@ -75,10 +75,48 @@
   // ---------- map ----------
   const map = L.map("map", { zoomControl: true }).setView([56.955, 24.125], 14);
 
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);
+  // Several basemaps: OSM's tile servers block some browsers/previews (403 "Access blocked"),
+  // so there's always a keyless alternative one click away. The choice is remembered per browser.
+  const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services";
+  const basemaps = {
+    "OpenStreetMap": L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      // OSM's tile usage policy requires a Referer; send the origin even under strict page policies.
+      referrerPolicy: "strict-origin-when-cross-origin",
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }),
+    "Esri Streets": L.tileLayer(`${ESRI}/World_Street_Map/MapServer/tile/{z}/{y}/{x}`, {
+      maxZoom: 19,
+      attribution: "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors",
+    }),
+    "Esri Satellite": L.tileLayer(`${ESRI}/World_Imagery/MapServer/tile/{z}/{y}/{x}`, {
+      maxZoom: 19,
+      attribution: "Tiles &copy; Esri &mdash; Esri, Maxar, Earthstar Geographics",
+    }),
+  };
+  const BASEMAP_KEY = "riga-parking:basemap";
+  let saved = null;
+  try { saved = localStorage.getItem(BASEMAP_KEY); } catch (_) { /* storage unavailable */ }
+  const initial = basemaps[saved] ? saved : "OpenStreetMap";
+  basemaps[initial].addTo(map);
+  L.control.layers(basemaps, null, { position: "topright" }).addTo(map);
+  map.on("baselayerchange", (e) => {
+    try { localStorage.setItem(BASEMAP_KEY, e.name); } catch (_) { /* ignore */ }
+  });
+
+  // If OSM tiles fail outright (none load, several error), fall back to Esri automatically.
+  (function autoFallback() {
+    const osm = basemaps["OpenStreetMap"];
+    let ok = 0, failed = 0;
+    osm.on("tileload", () => { ok++; });
+    osm.on("tileerror", () => {
+      if (++failed >= 4 && ok === 0 && map.hasLayer(osm)) {
+        map.removeLayer(osm);
+        basemaps["Esri Streets"].addTo(map);
+        console.warn("OpenStreetMap tiles failed to load; switched to Esri Streets.");
+      }
+    });
+  })();
 
   function markerIcon(p, obs) {
     const lvl = level(pctOf(p, obs));
@@ -237,7 +275,8 @@
     const dates = new Set();
     for (const row of parseCSV(csv)) {
       const parked = Number.parseInt(row.parked, 10);
-      if (!known.has(row.parking_id) || !/^\d{4}-\d{2}-\d{2}$/.test(row.date) || !Number.isFinite(parked)) {
+      if (!known.has(row.parking_id) || !/^\d{4}-\d{2}-\d{2}$/.test(row.date) ||
+          !/^\d+$/.test(row.parked) || !Number.isFinite(parked)) {
         console.warn("Skipping invalid observation row", row);
         continue;
       }

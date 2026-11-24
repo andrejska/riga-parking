@@ -146,9 +146,25 @@ This covers Vecrīga, Centrs, Avoti, Grīziņkalns, Skanste,
 Pētersala-Andrejsala and part of Brasa. The boundary is only drawn on the
 map. It doesn't filter anything, apart from the warning in `validate.py`.
 
+## Basemaps
+
+Use the layer button (top right of the map) to switch between three
+basemaps. None of them needs an API key.
+
+- **OpenStreetMap** is the default.
+- **Esri Streets** and **Esri Satellite** are alternatives.
+
+The page remembers your choice in this browser.
+
+OpenStreetMap's tile servers sometimes return **403 "Access blocked"**. This
+happens when the request has no proper `Referer` header, typically in some
+embedded previews or with strict privacy settings. If you see it, switch to
+Esri Streets. If OSM tiles fail completely, the page switches to Esri
+Streets by itself.
+
 ## Attribution
 
-Map tiles and base data © [OpenStreetMap](https://www.openstreetmap.org/copyright)
-contributors, ODbL. OSM's tile servers are fine for a low-traffic personal
-site. For heavier use, switch the `L.tileLayer` URL in `assets/app.js` to a
-commercial tile provider.
+Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright)
+contributors, ODbL. Esri basemap tiles © Esri and its data providers. OSM's
+tile servers are fine for a low-traffic personal site. For heavier use,
+change the tile URLs in `assets/app.js` to a commercial tile provider.
