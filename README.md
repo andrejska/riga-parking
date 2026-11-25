@@ -149,7 +149,8 @@ Six more were added by hand:
 - **BTA Daugava Athletics Arena** (Augšiela 1). Its operator (LNSC) describes
   covered parking on part of the arena's ground floor, near the service
   entrance, and publishes no space count.
-- **Radisson Blu Hotel Latvija**: underground, entrance from Baznīcas iela 7.
+- **Radisson Blu Hotel Latvija**: underground, entrance from Baznīcas iela 7,
+  operated by SNABB.
 - **Radisson Blu Elizabete Hotel**: underground, entrance from Elizabetes
   iela 73, operated by SNABB.
 - **Barona centrs** (Krišjāņa Barona iela 46): the shopping centre's
@@ -159,18 +160,27 @@ Six more were added by hand:
 - **Radisson Blu Rīdzene** (Reimersa iela 1): underground, entrance from
   Kalpaka bulvāris, operated by SNABB. It used to be for hotel guests only.
 
-**Capacity is known for only 4 of the 17**, and each entry's `notes` and
+**Capacity is known for 10 of the 17**, and each entry's `notes` and
 `sources` say where the figure came from:
 
-| car park            | capacity | source                                         |
-|---------------------|---------:|------------------------------------------------|
-| Kongresu nams       |      317 | rigassatiksme.lv (operator)                    |
-| Jēkaba Arkāde       |      300 | OpenStreetMap `capacity` tag                   |
-| Marijas iela 2      |      270 | neighborhood.lv article (not operator-confirmed) |
-| Galleria Riga       |    ~120 | galleriariga.lv ("about 120 spaces")           |
+| car park               | capacity | source                                              |
+|------------------------|---------:|-----------------------------------------------------|
+| Place 11               |      323 | strandeck.eu project page, 2016 (not operator-confirmed) |
+| Kongresu nams          |      317 | rigassatiksme.lv (operator)                         |
+| Jēkaba Arkāde          |      300 | OpenStreetMap `capacity` tag                        |
+| Marijas iela 2         |      270 | neighborhood.lv article (not operator-confirmed)    |
+| Origo P1 / P2          |      199 | linstowbaltic.lv (owner): P1 117 + P2 82            |
+| Galleria Riga          |     ~120 | galleriariga.lv ("about 120 spaces")                |
+| Radisson Blu Latvija   |       85 | linstowbaltic.lv (owner)                            |
+| Stockmann              |       76 | liveriga.com                                        |
+| Origo P3               |       45 | linstowbaltic.lv (owner)                            |
+| Radisson Blu Elizabete |       26 | linstowbaltic.lv (owner)                            |
 
-The rest are `null`. Fill them in when you find an operator figure or count
-the spaces yourself.
+The rest are `null`. A search in November 2026 found no reliable figure for
+them: VERDE's 375 spaces include its above-ground parking, SNABB gives only a
+combined "almost 200" for five Radisson hotels, and the ParkMe figures for
+Lielgabalu (170) and Grostonas (921) couldn't be checked. Fill them in when
+you find an operator figure or count the spaces yourself.
 
 OSM may also miss some facilities, for example a car park inside a shopping
 centre that is only mapped as a building. Add those by hand.
@@ -193,8 +203,9 @@ Origo's parking has sections P1, P2 and P3. The entry first listed as
 *Origo One* is P1 and P2, now named *Origo P1 / P2*, and the one first listed
 as *Origo* is P3, now *Origo P3*. The ids (`origo-one`, `origo`) are
 unchanged. The check counted P1 and P2 together, and P3 was closed to the
-public. origo.lv gives 248 spaces for all three sections together, with no
-split, so both entries have capacity `null`.
+public. The owner, Linstow Baltic, gives P1 117, P2 82 and P3 45 spaces
+(244 in all; origo.lv says 248), so the entries have 199 and 45. Linstow
+names SNABB as the operator of all three sections.
 
 ### The boundary
 

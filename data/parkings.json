@@ -53,15 +53,16 @@
     "address": "Stacijas laukums 2",
     "lat": 56.9478,
     "lon": 24.12156,
-    "capacity": null,
-    "operator": "EuroPark",
+    "capacity": 45,
+    "operator": "SNABB",
     "access": "public",
     "sources": [
       "https://www.openstreetmap.org/node/30694231",
       "https://origo.lv/en/amenity-type/access",
-      "https://www.origo.lv/en/amenity-type/parking/"
+      "https://www.origo.lv/en/amenity-type/parking/",
+      "https://www.linstowbaltic.lv/en/estates/s-c-origo-parking/"
     ],
-    "notes": "Section P3 of Origo's parking. origo.lv gives 248 spaces for P1, P2 and P3 together (cars and motorbikes, including spaces for people with reduced mobility and families, and 5 EV charging stations) but no per-section split. On 2026-11-25 P3 was closed to the public."
+    "notes": "Section P3 of Origo's parking. Capacity from the owner, Linstow Baltic: P1 117, P2 82, P3 45 spaces (244 in all; the same page's intro says 250, and origo.lv says 248). Linstow lists P3 as restricted access, entry/exit from Elizabetes iela. On 2026-11-25 P3 was closed to the public."
   },
   {
     "id": "origo-one",
@@ -70,14 +71,15 @@
     "address": "Satekles iela 2B",
     "lat": 56.94718,
     "lon": 24.12281,
-    "capacity": null,
-    "operator": "EuroPark",
+    "capacity": 199,
+    "operator": "SNABB",
     "access": "public",
     "sources": [
       "https://www.openstreetmap.org/node/7896181766",
-      "https://www.origo.lv/en/amenity-type/parking/"
+      "https://www.origo.lv/en/amenity-type/parking/",
+      "https://www.linstowbaltic.lv/en/estates/s-c-origo-parking/"
     ],
-    "notes": "Sections P1 and P2 of Origo's parking, first listed as Origo One. origo.lv gives 248 spaces for P1, P2 and P3 together but no per-section split."
+    "notes": "Sections P1 and P2 of Origo's parking, first listed as Origo One. Capacity from the owner, Linstow Baltic: P1 117 + P2 82 spaces (P3 has 45 more; the same page's intro says 250 in all, and origo.lv says 248). P1 is entered from Satekles iela, P2 from Satekles iela or Elizabetes iela."
   },
   {
     "id": "marijas-2",
@@ -102,13 +104,14 @@
     "address": "13. janvāra iela 8",
     "lat": 56.94629,
     "lon": 24.11795,
-    "capacity": null,
+    "capacity": 76,
     "operator": "Stockmann",
     "access": "public",
     "sources": [
-      "https://www.openstreetmap.org/node/428039024"
+      "https://www.openstreetmap.org/node/428039024",
+      "https://www.liveriga.com/lv/3749-stockmann-1"
     ],
-    "notes": ""
+    "notes": "Underground car park connected to the department store, for customers. Capacity (76 spaces) from Live Riga, the city's tourism site."
   },
   {
     "id": "bta-daugava-arena",
@@ -164,13 +167,14 @@
     "address": "Sporta iela 11",
     "lat": 56.96502,
     "lon": 24.11782,
-    "capacity": null,
+    "capacity": 323,
     "operator": "EuroPark",
     "access": "public",
     "sources": [
-      "https://www.openstreetmap.org/way/626861465"
+      "https://www.openstreetmap.org/way/626861465",
+      "https://strandeck.eu/projects/place-eleven/"
     ],
-    "notes": ""
+    "notes": "Parking for the Place Eleven office building. Capacity (323 spaces, including EV and accessible spaces) from Strandeck's project page for the building (completed 2016); not confirmed by the operator."
   },
   {
     "id": "grostonas-1",
@@ -195,14 +199,15 @@
     "address": "Baznīcas iela 7 (entrance)",
     "lat": 56.95576,
     "lon": 24.11797,
-    "capacity": null,
-    "operator": "Radisson Blu Hotel Latvija",
+    "capacity": 85,
+    "operator": "SNABB",
     "access": "public",
     "sources": [
       "https://www.openstreetmap.org/node/2820185609",
-      "https://www.radissonhotels.com/en-us/hotels/radisson-blu-conference-riga-latvija-spa/contact"
+      "https://www.radissonhotels.com/en-us/hotels/radisson-blu-conference-riga-latvija-spa/contact",
+      "https://www.linstowbaltic.lv/en/estates/hotel-latvia-parking/"
     ],
-    "notes": "Car park under the hotel (Elizabetes iela 55), entrance from Baznīcas iela 7. Public use per local report; Radisson lists it as paid guest parking."
+    "notes": "Car park under the hotel (Elizabetes iela 55), entrance from Baznīcas iela 7. Public use per local report; Radisson lists it as paid guest parking. Capacity (85 spaces) and operator from the owner, Linstow Baltic. Pay in the Snabb or Mobilly app or at the machine."
   },
   {
     "id": "radisson-elizabete",
@@ -211,15 +216,16 @@
     "address": "Elizabetes iela 73",
     "lat": 56.95196,
     "lon": 24.12052,
-    "capacity": null,
+    "capacity": 26,
     "operator": "SNABB",
     "access": "public",
     "sources": [
       "https://www.openstreetmap.org/node/4396671402",
       "https://uk.trip.com/hotels/riga-hotel-detail-2919102/radisson-blu-elizabete-hotel-riga",
-      "https://www.radissonhotels.com/en-us/hotels/radisson-blu-riga-elizabete/contact"
+      "https://www.radissonhotels.com/en-us/hotels/radisson-blu-riga-elizabete/contact",
+      "https://www.linstowbaltic.lv/en/estates/hotel-elizabete-parking/"
     ],
-    "notes": "Underground garage operated by SNABB (per booking listings). Trip.com lists it as open to non-guests (about EUR 15/day); hotel guests pay EUR 19/night. Spaces are limited."
+    "notes": "Underground garage operated by SNABB, entry/exit from Elizabetes iela. Capacity (26 spaces) from the owner, Linstow Baltic. Trip.com lists it as open to non-guests (about EUR 15/day); hotel guests pay EUR 19/night."
   },
   {
     "id": "barona-centrs",
@@ -252,7 +258,7 @@
       "https://verde.lv/parking",
       "https://www.openstreetmap.org/way/1493875582"
     ],
-    "notes": "Underground car park of the VERDE office complex in Skanste, SNABB zone VERDE: first 15 min free, then EUR 2.50/hour, EUR 15/24 h; evening pass (Mon-Fri 18:00-08:00 plus weekends) EUR 40/month. No barrier: prepay in the Snabb or Mobilly app, at verde.snabb.lv or at the machine on site. A screen outside shows free spaces. ELEPORT EV charging customers get 1 h free. Capacity not published. SNABB also runs a surface car park at the same address (zone S9), which isn't on this map."
+    "notes": "Underground car park of the VERDE office complex in Skanste, SNABB zone VERDE: first 15 min free, then EUR 2.50/hour, EUR 15/24 h; evening pass (Mon-Fri 18:00-08:00 plus weekends) EUR 40/month. No barrier: prepay in the Snabb or Mobilly app, at verde.snabb.lv or at the machine on site. A screen outside shows free spaces. ELEPORT EV charging customers get 1 h free. Underground capacity not published: verde.lv gives 375 underground and above-ground spaces together. SNABB also runs a surface car park at the same address (zone S9), which isn't on this map."
   },
   {
     "id": "radisson-ridzene",
