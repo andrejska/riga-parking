@@ -306,20 +306,21 @@
   }
 
   function renderList() {
-    let withData = 0, parked = 0, cap = 0;
+    let withData = 0, free = 0, cap = 0;
     const shown = state.parkings.filter(isVisible);
     const items = shown.map((p) => {
       const obs = readingFor(p.id);
       const pct = pctOf(p, obs);
-      const n = parkedOf(p, obs);
+      const f = freeOf(p, obs);
       if (obs) {
         withData++;
-        if (p.capacity && n != null) { parked += n; cap += p.capacity; }
+        if (p.capacity && f != null) { free += f; cap += p.capacity; }
       }
       let val;
       if (!obs) val = `<small>${p.capacity ? p.capacity + " spaces" : "–"}</small>`;
-      else if (n == null) val = `${freeOf(p, obs)}<small>free</small>`;
-      else val = `${n}${p.capacity ? `<small>${pct}% of ${p.capacity}</small>` : "<small>cars</small>"}`;
+      else if (f == null) val = `${parkedOf(p, obs)}<small>cars</small>`;
+      else if (!p.capacity) val = `${f}<small>free</small>`;
+      else val = `${f}<small>${Math.round((f / p.capacity) * 100)}% of ${p.capacity} free</small>`;
       return `<li><button type="button" data-id="${esc(p.id)}" class="${level(pct)}">
           <span class="name">${esc(p.name)}</span>
           <span class="val">${val}</span>
@@ -333,7 +334,7 @@
     const single = state.selected !== LATEST;
     const scope = single ? `${fmtDay(state.selected)}, ${dayInfo(state.selected).kind}` : "latest readings";
     $summary.textContent = `${shown.length} car parks · ${withData} with data (${scope})` +
-      (single && cap ? ` · ${parked} of ${cap} known spaces used (${Math.round((parked / cap) * 100)}%)` : "");
+      (single && cap ? ` · ${free} of ${cap} known spaces free (${Math.round((free / cap) * 100)}%)` : "");
   }
 
   function renderMarkers() {
