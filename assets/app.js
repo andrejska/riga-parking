@@ -34,6 +34,70 @@
       { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
   };
 
+  const utcDate = (iso) => {
+    const [y, m, d] = iso.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d));
+  };
+  const isoOf = (dt) => dt.toISOString().slice(0, 10);
+
+  /** Gregorian Easter Sunday (anonymous algorithm) as a UTC date. */
+  function easter(y) {
+    const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4;
+    const f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
+    const h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+    const month = Math.floor((h + l - 7 * m + 114) / 31), day = ((h + l - 7 * m + 114) % 31) + 1;
+    return new Date(Date.UTC(y, month - 1, day));
+  }
+
+  /**
+   * Latvian public holidays that fall on weekdays (Sunday holidays are weekends anyway).
+   * May 4 and Nov 18 move to the next Monday when they fall on a weekend.
+   * One-off days off declared by the government are not covered.
+   */
+  const holidayCache = new Map();
+  function holidays(y) {
+    if (holidayCache.has(y)) return holidayCache.get(y);
+    const h = new Map();
+    const add = (dt, name) => h.set(isoOf(dt), name);
+    const on = (m, d, name) => add(new Date(Date.UTC(y, m - 1, d)), name);
+    const movable = (m, d, name) => {
+      const dt = new Date(Date.UTC(y, m - 1, d));
+      const wd = dt.getUTCDay();
+      add(dt, name);
+      if (wd === 6 || wd === 0) add(new Date(dt.getTime() + (wd === 6 ? 2 : 1) * 864e5), `${name} (moved)`);
+    };
+    const e = easter(y).getTime();
+    on(1, 1, "New Year's Day");
+    add(new Date(e - 2 * 864e5), "Good Friday");
+    add(new Date(e + 1 * 864e5), "Easter Monday");
+    on(5, 1, "Labour Day");
+    movable(5, 4, "Restoration of Independence Day");
+    on(6, 23, "Midsummer Eve");
+    on(6, 24, "Midsummer Day");
+    movable(11, 18, "Proclamation Day");
+    on(12, 24, "Christmas Eve");
+    on(12, 25, "Christmas Day");
+    on(12, 26, "Second Day of Christmas");
+    on(12, 31, "New Year's Eve");
+    holidayCache.set(y, h);
+    return h;
+  }
+
+  /** Weekday and day type for a YYYY-MM-DD date: working day, weekend or public holiday. */
+  function dayInfo(iso) {
+    const dt = utcDate(iso);
+    const weekday = dt.toLocaleDateString("en-GB", { weekday: "long", timeZone: "UTC" });
+    const short = weekday.slice(0, 3);
+    const holiday = holidays(dt.getUTCFullYear()).get(iso);
+    const wd = dt.getUTCDay();
+    if (holiday) return { weekday, short, off: true, kind: "public holiday", label: `public holiday, ${holiday}` };
+    if (wd === 0 || wd === 6) return { weekday, short, off: true, kind: "weekend", label: "weekend" };
+    return { weekday, short, off: false, kind: "working day", label: "working day" };
+  }
+
+  const fmtDay = (iso) => `${dayInfo(iso).short} ${fmtDate(iso)}`;
+
   function level(pct) {
     if (pct == null) return "lvl-none";
     if (pct < 60) return "lvl-low";
@@ -173,15 +237,20 @@
       const big = parked != null
         ? `${parked}${p.capacity ? ` / ${p.capacity}` : ""} cars`
         : `${free} free`;
+      const day = dayInfo(obs.date);
       reading = `
         <div class="reading ${level(pct)}">
           <div class="big">${big}
             ${pct != null ? `<span class="muted">· ${pct}%</span>` : ""}</div>
-          <div class="when">${fmtDate(obs.date)}${obs.time ? ` at ${esc(obs.time)}` : ""}
-            ${parked != null && free != null ? ` · ${free} free` : ""}
-            ${parked == null ? ` · <span title="Capacity unknown">occupancy unknown</span>` : ""}</div>
+          ${parked != null && free != null ? `<div class="when">${free} free</div>` : ""}
+          ${parked == null ? `<div class="when"><span title="Capacity unknown">Occupancy unknown</span></div>` : ""}
           ${pct != null ? `<div class="bar"><span style="width:${Math.min(pct, 100)}%"></span></div>` : ""}
-          ${obs.note ? `<div class="when">${esc(obs.note)}</div>` : ""}
+          <dl class="counted">
+            <dt>Counted</dt><dd>${esc(day.weekday)}, ${fmtDate(obs.date)}</dd>
+            <dt>Time</dt><dd>${obs.time ? esc(obs.time) : '<span class="muted">not recorded</span>'}</dd>
+            <dt>Day type</dt><dd><span class="daytype ${day.off ? "off" : "work"}">${esc(day.label)}</span></dd>
+            ${obs.note ? `<dt>Note</dt><dd>${esc(obs.note)}</dd>` : ""}
+          </dl>
         </div>`;
     } else {
       const what = state.selected === LATEST ? "No observations yet." : `No observation on ${fmtDate(state.selected)}.`;
@@ -190,12 +259,15 @@
 
     const history = all.length ? `
       <div class="history"><table>
-        <thead><tr><th>Date</th><th>Time</th><th class="num">Parked</th><th class="num">Free</th><th class="num">%</th></tr></thead>
+        <thead><tr><th>Date</th><th>Day</th><th>Time</th><th class="num">Parked</th><th class="num">Free</th><th class="num">%</th></tr></thead>
         <tbody>${all.map((o) => {
           const op = pctOf(p, o);
           const n = (v) => (v != null ? v : "–");
+          const d = dayInfo(o.date);
           return `<tr class="${o === obs ? "sel" : ""}" ${o.note ? `title="${esc(o.note)}"` : ""}>
-            <td>${esc(o.date)}</td><td>${esc(o.time || "–")}</td>
+            <td>${esc(o.date)}</td>
+            <td><span class="daytype ${d.off ? "off" : "work"}" title="${esc(d.weekday + ", " + d.label)}">${esc(d.short)}</span></td>
+            <td>${esc(o.time || "–")}</td>
             <td class="num">${n(parkedOf(p, o))}</td><td class="num">${n(freeOf(p, o))}</td>
             <td class="num">${op != null ? op + "%" : "–"}</td></tr>`;
         }).join("")}</tbody>
@@ -228,7 +300,7 @@
 
   function renderSelect() {
     const opts = [`<option value="${LATEST}">Latest observation for each</option>`]
-      .concat(state.dates.map((d) => `<option value="${d}">${fmtDate(d)}</option>`));
+      .concat(state.dates.map((d) => `<option value="${d}">${fmtDay(d)} (${dayInfo(d).kind})</option>`));
     $select.innerHTML = opts.join("");
     $select.value = state.selected;
   }
@@ -252,13 +324,14 @@
           <span class="name">${esc(p.name)}</span>
           <span class="val">${val}</span>
           <span class="meta">${esc(TYPE_LABEL[p.type] || p.type)} · ${esc(p.address || "")}</span>
+          ${obs ? `<span class="meta when">Counted ${esc(fmtDay(obs.date))}${obs.time ? `, ${esc(obs.time)}` : ""} · ${esc(dayInfo(obs.date).kind)}</span>` : ""}
         </button></li>`;
     });
     $list.innerHTML = items.join("");
 
     // A combined total only makes sense for one date, not for "latest" readings from different days.
     const single = state.selected !== LATEST;
-    const scope = single ? fmtDate(state.selected) : "latest readings";
+    const scope = single ? `${fmtDay(state.selected)}, ${dayInfo(state.selected).kind}` : "latest readings";
     $summary.textContent = `${shown.length} car parks · ${withData} with data (${scope})` +
       (single && cap ? ` · ${parked} of ${cap} known spaces used (${Math.round((parked / cap) * 100)}%)` : "");
   }

@@ -85,6 +85,13 @@ Marker colour is the share of capacity in use: green under 60%, amber
 60–85%, red over 85%, grey when there's no count or the capacity is unknown.
 The popup shows the full history for that car park.
 
+For each count, the popup and the list show the weekday, the time and the
+day type: **working day**, **weekend** or **public holiday**. The day type is
+worked out from the date, so the CSV needs no extra column. Public holidays
+are Latvia's statutory ones, including Easter, and May 4 and November 18
+moving to Monday when they fall on a weekend. One-off days off that the
+government declares are not included.
+
 ## Adding or editing a car park
 
 Add an object to `data/parkings.json`:

@@ -173,6 +173,10 @@ a { color: var(--accent); }
 .pp .reading { background: var(--bg-soft); border-radius: 8px; padding: 9px 10px; margin-bottom: 10px; }
 .pp .reading .big { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .pp .reading .when { font-size: 12px; color: var(--fg-muted); }
+.pp .reading dl.counted { font-size: 12px; margin: 8px 0 0; }
+.daytype { font-weight: 600; }
+.daytype.work { color: var(--fg); }
+.daytype.off { color: var(--accent); }
 .bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; margin-top: 6px; }
 .bar > span { display: block; height: 100%; background: var(--lvl); }
 
