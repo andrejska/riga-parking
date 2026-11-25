@@ -319,8 +319,8 @@
       let val;
       if (!obs) val = `<small>${p.capacity ? p.capacity + " spaces" : "–"}</small>`;
       else if (f == null) val = `${parkedOf(p, obs)}<small>cars</small>`;
-      else if (!p.capacity) val = `${f}<small>free</small>`;
-      else val = `${f}<small>${Math.round((f / p.capacity) * 100)}% of ${p.capacity} free</small>`;
+      else if (!p.capacity) val = `${f} free`;
+      else val = `${f} free<small>${Math.round((f / p.capacity) * 100)}% of ${p.capacity}</small>`;
       return `<li><button type="button" data-id="${esc(p.id)}" class="${level(pct)}">
           <span class="name">${esc(p.name)}</span>
           <span class="val">${val}</span>
