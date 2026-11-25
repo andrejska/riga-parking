@@ -48,12 +48,12 @@
   },
   {
     "id": "origo",
-    "name": "Origo",
+    "name": "Origo P3",
     "type": "underground",
     "address": "Stacijas laukums 2",
     "lat": 56.9478,
     "lon": 24.12156,
-    "capacity": 248,
+    "capacity": null,
     "operator": "EuroPark",
     "access": "public",
     "sources": [
@@ -61,11 +61,11 @@
       "https://origo.lv/en/amenity-type/access",
       "https://www.origo.lv/en/amenity-type/parking/"
     ],
-    "notes": "Capacity from origo.lv: 248 spaces for cars and motorbikes, including spaces for people with reduced mobility and families, and 5 EV charging stations. On-site signs split it into sections P1, P2 and P3; on 2026-11-25 P3 was closed to the public."
+    "notes": "Section P3 of Origo's parking. origo.lv gives 248 spaces for P1, P2 and P3 together (cars and motorbikes, including spaces for people with reduced mobility and families, and 5 EV charging stations) but no per-section split. On 2026-11-25 P3 was closed to the public."
   },
   {
     "id": "origo-one",
-    "name": "Origo One",
+    "name": "Origo P1 / P2",
     "type": "underground",
     "address": "Satekles iela 2B",
     "lat": 56.94718,
@@ -74,9 +74,10 @@
     "operator": "EuroPark",
     "access": "public",
     "sources": [
-      "https://www.openstreetmap.org/node/7896181766"
+      "https://www.openstreetmap.org/node/7896181766",
+      "https://www.origo.lv/en/amenity-type/parking/"
     ],
-    "notes": ""
+    "notes": "Sections P1 and P2 of Origo's parking, first listed as Origo One. origo.lv gives 248 spaces for P1, P2 and P3 together but no per-section split."
   },
   {
     "id": "marijas-2",

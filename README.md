@@ -152,7 +152,7 @@ Six more were added by hand:
 - **Radisson Blu Rīdzene** (Reimersa iela 1): underground, entrance from
   Kalpaka bulvāris, operated by SNABB. It used to be for hotel guests only.
 
-**Capacity is known for only 5 of the 17**, and each entry's `notes` and
+**Capacity is known for only 4 of the 17**, and each entry's `notes` and
 `sources` say where the figure came from:
 
 | car park            | capacity | source                                         |
@@ -160,7 +160,6 @@ Six more were added by hand:
 | Kongresu nams       |      317 | rigassatiksme.lv (operator)                    |
 | Jēkaba Arkāde       |      300 | OpenStreetMap `capacity` tag                   |
 | Marijas iela 2      |      270 | neighborhood.lv article (not operator-confirmed) |
-| Origo               |      248 | origo.lv (shopping centre)                     |
 | Galleria Riga       |    ~120 | galleriariga.lv ("about 120 spaces")           |
 
 The rest are `null`. Fill them in when you find an operator figure or count
@@ -183,8 +182,12 @@ The first counts in `observations.csv` come from a site check on
   It is now *EuroPark Baznīcas multi-storey*, as the site check calls it.
   The id `gertrudes-10` is unchanged.
 
-Origo's on-site signs split the car park into P1, P2 and P3. The check
-counted P1 and P2 together, and P3 was closed to the public.
+Origo's parking has sections P1, P2 and P3. The entry first listed as
+*Origo One* is P1 and P2, now named *Origo P1 / P2*, and the one first listed
+as *Origo* is P3, now *Origo P3*. The ids (`origo-one`, `origo`) are
+unchanged. The check counted P1 and P2 together, and P3 was closed to the
+public. origo.lv gives 248 spaces for all three sections together, with no
+split, so both entries have capacity `null`.
 
 ### The boundary
 

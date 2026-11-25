@@ -1,6 +1,6 @@
 parking_id,date,time,parked,free,note
 stockmann,2026-11-25,14:30,,26,"22 free + 4 disabled free"
-origo,2026-11-25,14:35,,75,"P1: 51 free + 5 disabled; P2: 12 free + 3 disabled + 4 EV charging; P3: no public access, not counted"
+origo-one,2026-11-25,14:35,,75,"P1: 51 free + 5 disabled; P2: 12 free + 3 disabled + 4 EV charging"
 berga-bazars,2026-11-25,14:45,,9,
 dzirnavu-78-80,2026-11-25,14:45,,1,
 galleria-riga,2026-11-25,14:55,,10,"9 free + 1 disabled free"
