@@ -10,6 +10,11 @@ The map dims and blurs everything outside the loop. Hovering a car park in
 the list highlights its marker on the map, and hovering a marker highlights
 its row in the list.
 
+Open-air lots are hidden by default. Tick **Selected parking lots** in the
+side panel to show them, or open the map with `?selected-parking-lots=1`
+(for example `https://andrejska.github.io/riga-parking/?selected-parking-lots=1`).
+The toggle keeps the URL in sync, so you can share a link with the lots on.
+
 It's a static site with no build step, backend or database. The data is two
 plain files that you edit by hand.
 
@@ -46,9 +51,9 @@ Any static host works: copy the folder as it is.
 Add one line to `data/observations.csv` per count:
 
 ```csv
-parking_id,date,time,parked,note
-jekaba-arkade,2026-11-24,09:30,212,weekday morning
-galleria-riga,2026-11-24,17:45,118,"rain, pre-Christmas"
+parking_id,date,time,parked,free,note
+jekaba-arkade,2026-11-24,09:30,212,,weekday morning
+galleria-riga,2026-11-24,17:45,,9,"9 free + 1 disabled free"
 ```
 
 | column       | required | format                                                        |
@@ -56,11 +61,17 @@ galleria-riga,2026-11-24,17:45,118,"rain, pre-Christmas"
 | `parking_id` | yes      | an `id` from `parkings.json`                                  |
 | `date`       | yes      | `YYYY-MM-DD`                                                  |
 | `time`       | no       | `HH:MM` in 24-hour time; leave empty if unknown               |
-| `parked`     | yes      | whole number of cars                                          |
+| `parked`     | one of   | whole number of cars parked                                   |
+| `free`       | the two  | whole number of free spaces (count disabled/EV spaces too)    |
 | `note`       | no       | free text; put it in quotes if it contains a comma            |
 
 You can edit the file in a spreadsheet as long as you save it back as CSV
 with the same header.
+
+Record whichever you counted: `parked`, `free` or both. When only one is
+given and the capacity is known, the map works out the other. When only
+`free` is given and the capacity is unknown, the map shows the free count but
+no occupancy percentage.
 
 The **"Show occupancy on"** selector lists every date that has at least one
 observation:
@@ -96,8 +107,10 @@ Add an object to `data/parkings.json`:
 
 - `id` must be lowercase-with-dashes and unique. Observations refer to it, so
   don't change it once you've recorded counts.
-- `type` is `underground` (round **U** marker), `multi-storey` (**M**) or
-  `covered` (**C**, a roofed car park at ground level, e.g. under a building).
+- `type` is `underground` (round **U** marker), `multi-storey` (**M**),
+  `covered` (**C**, a roofed car park at ground level, e.g. under a building)
+  or `surface` (**P** with a dashed border, an open-air lot). `surface` lots
+  only show when *Selected parking lots* is on.
 - `capacity` is a whole number, or `null` if unknown.
 - `access` is `public`, `customers` or `private`. Anything else, such as
   `unconfirmed`, shows as "Not confirmed" in the popup.
@@ -111,9 +124,10 @@ python3 scripts/validate.py
 ```
 
 The script reports these as **errors**: unknown ids, bad dates or times,
-negative counts and a wrong header.
+negative counts, rows with neither `parked` nor `free`, and a wrong header.
 
-It reports these as **warnings**: a count above capacity, duplicate
+It reports these as **warnings**: a count above capacity, `parked + free`
+not matching the capacity, duplicate
 observations and a car park outside the boundary.
 
 ## About the starting data
@@ -138,7 +152,7 @@ Six more were added by hand:
 - **Radisson Blu Rīdzene** (Reimersa iela 1): underground, entrance from
   Kalpaka bulvāris, operated by SNABB. It used to be for hotel guests only.
 
-**Capacity is known for only 4 of the 17**, and each entry's `notes` and
+**Capacity is known for only 5 of the 17**, and each entry's `notes` and
 `sources` say where the figure came from:
 
 | car park            | capacity | source                                         |
@@ -146,6 +160,7 @@ Six more were added by hand:
 | Kongresu nams       |      317 | rigassatiksme.lv (operator)                    |
 | Jēkaba Arkāde       |      300 | OpenStreetMap `capacity` tag                   |
 | Marijas iela 2      |      270 | neighborhood.lv article (not operator-confirmed) |
+| Origo               |      248 | origo.lv (shopping centre)                     |
 | Galleria Riga       |    ~120 | galleriariga.lv ("about 120 spaces")           |
 
 The rest are `null`. Fill them in when you find an operator figure or count
@@ -154,7 +169,22 @@ the spaces yourself.
 OSM may also miss some facilities, for example a car park inside a shopping
 centre that is only mapped as a building. Add those by hand.
 
-`observations.csv` starts empty, with only the header row.
+### Site check, 25 Nov 2026
+
+The first counts in `observations.csv` come from a site check on
+25 November 2026 (14:30–15:42), which recorded free spaces. It added:
+
+- six open-air lots (`surface`, behind the *Selected parking lots* toggle):
+  Berga Bazārs, EuroPark Dzirnavu 78/80, EuroPark Dzirnavu / Brīvības,
+  EuroPark Brīvības / Dzirnavu / Baznīcas (courtyard), ARS Skolas iela and
+  the gravel lot on Audēju iela by Galerija Centrs. Each was matched to an
+  OpenStreetMap car park, and their capacities are unknown;
+- a new name for the multi-storey garage first listed as *Ģertrūdes iela 10*.
+  It is now *EuroPark Baznīcas multi-storey*, as the site check calls it.
+  The id `gertrudes-10` is unchanged.
+
+Origo's on-site signs split the car park into P1, P2 and P3. The check
+counted P1 and P2 together, and P3 was closed to the public.
 
 ### The boundary
 

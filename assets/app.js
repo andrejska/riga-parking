@@ -3,10 +3,18 @@
   "use strict";
 
   const LATEST = "latest";
-  const TYPE_LABEL = { "underground": "Underground", "multi-storey": "Multi-storey", "covered": "Covered" };
-  const TYPE_LETTER = { "underground": "U", "multi-storey": "M", "covered": "C" };
+  const TYPE_LABEL = { "underground": "Underground", "multi-storey": "Multi-storey", "covered": "Covered", "surface": "Surface lot" };
+  const TYPE_LETTER = { "underground": "U", "multi-storey": "M", "covered": "C", "surface": "P" };
+
+  // Open-air lots are hidden unless ?selected-parking-lots=1 (or the toggle) turns them on.
+  const LOTS_PARAM = "selected-parking-lots";
+  const lotsFromURL = () => {
+    const v = new URLSearchParams(location.search).get(LOTS_PARAM);
+    return v !== null && !["0", "false", "no", "off"].includes(v.toLowerCase());
+  };
 
   const state = {
+    showLots: lotsFromURL(),
     parkings: [],          // from parkings.json
     obsById: new Map(),    // parking_id -> observations sorted newest first
     dates: [],             // distinct observation dates, newest first
@@ -75,8 +83,24 @@
     return known[access] ? esc(known[access]) : '<span class="muted">Not confirmed</span>';
   }
 
+  const isVisible = (p) => p.type !== "surface" || state.showLots;
+
+  // An observation records cars parked, free spaces, or both; derive the other from capacity.
+  function parkedOf(p, obs) {
+    if (!obs) return null;
+    if (obs.parked != null) return obs.parked;
+    return p.capacity && obs.free != null ? Math.max(p.capacity - obs.free, 0) : null;
+  }
+
+  function freeOf(p, obs) {
+    if (!obs) return null;
+    if (obs.free != null) return obs.free;
+    return p.capacity && obs.parked != null ? Math.max(p.capacity - obs.parked, 0) : null;
+  }
+
   function pctOf(p, obs) {
-    return obs && p.capacity ? Math.round((obs.parked / p.capacity) * 100) : null;
+    const parked = parkedOf(p, obs);
+    return parked != null && p.capacity ? Math.round((parked / p.capacity) * 100) : null;
   }
 
   // ---------- map ----------
@@ -144,13 +168,18 @@
 
     let reading;
     if (obs) {
-      const free = p.capacity != null ? Math.max(p.capacity - obs.parked, 0) : null;
+      const parked = parkedOf(p, obs);
+      const free = freeOf(p, obs);
+      const big = parked != null
+        ? `${parked}${p.capacity ? ` / ${p.capacity}` : ""} cars`
+        : `${free} free`;
       reading = `
         <div class="reading ${level(pct)}">
-          <div class="big">${obs.parked}${p.capacity ? ` / ${p.capacity}` : ""} cars
+          <div class="big">${big}
             ${pct != null ? `<span class="muted">· ${pct}%</span>` : ""}</div>
           <div class="when">${fmtDate(obs.date)}${obs.time ? ` at ${esc(obs.time)}` : ""}
-            ${free != null ? ` · ${free} free` : ""}</div>
+            ${parked != null && free != null ? ` · ${free} free` : ""}
+            ${parked == null ? ` · <span title="Capacity unknown">occupancy unknown</span>` : ""}</div>
           ${pct != null ? `<div class="bar"><span style="width:${Math.min(pct, 100)}%"></span></div>` : ""}
           ${obs.note ? `<div class="when">${esc(obs.note)}</div>` : ""}
         </div>`;
@@ -161,12 +190,14 @@
 
     const history = all.length ? `
       <div class="history"><table>
-        <thead><tr><th>Date</th><th>Time</th><th class="num">Parked</th><th class="num">%</th></tr></thead>
+        <thead><tr><th>Date</th><th>Time</th><th class="num">Parked</th><th class="num">Free</th><th class="num">%</th></tr></thead>
         <tbody>${all.map((o) => {
           const op = pctOf(p, o);
+          const n = (v) => (v != null ? v : "–");
           return `<tr class="${o === obs ? "sel" : ""}" ${o.note ? `title="${esc(o.note)}"` : ""}>
             <td>${esc(o.date)}</td><td>${esc(o.time || "–")}</td>
-            <td class="num">${o.parked}</td><td class="num">${op != null ? op + "%" : "–"}</td></tr>`;
+            <td class="num">${n(parkedOf(p, o))}</td><td class="num">${n(freeOf(p, o))}</td>
+            <td class="num">${op != null ? op + "%" : "–"}</td></tr>`;
         }).join("")}</tbody>
       </table></div>` : "";
 
@@ -204,16 +235,19 @@
 
   function renderList() {
     let withData = 0, parked = 0, cap = 0;
-    const items = state.parkings.map((p) => {
+    const shown = state.parkings.filter(isVisible);
+    const items = shown.map((p) => {
       const obs = readingFor(p.id);
       const pct = pctOf(p, obs);
+      const n = parkedOf(p, obs);
       if (obs) {
         withData++;
-        if (p.capacity) { parked += obs.parked; cap += p.capacity; }
+        if (p.capacity && n != null) { parked += n; cap += p.capacity; }
       }
-      const val = obs
-        ? `${obs.parked}${p.capacity ? `<small>${pct}% of ${p.capacity}</small>` : "<small>cars</small>"}`
-        : `<small>${p.capacity ? p.capacity + " spaces" : "–"}</small>`;
+      let val;
+      if (!obs) val = `<small>${p.capacity ? p.capacity + " spaces" : "–"}</small>`;
+      else if (n == null) val = `${freeOf(p, obs)}<small>free</small>`;
+      else val = `${n}${p.capacity ? `<small>${pct}% of ${p.capacity}</small>` : "<small>cars</small>"}`;
       return `<li><button type="button" data-id="${esc(p.id)}" class="${level(pct)}">
           <span class="name">${esc(p.name)}</span>
           <span class="val">${val}</span>
@@ -225,13 +259,18 @@
     // A combined total only makes sense for one date, not for "latest" readings from different days.
     const single = state.selected !== LATEST;
     const scope = single ? fmtDate(state.selected) : "latest readings";
-    $summary.textContent = `${state.parkings.length} car parks · ${withData} with data (${scope})` +
+    $summary.textContent = `${shown.length} car parks · ${withData} with data (${scope})` +
       (single && cap ? ` · ${parked} of ${cap} known spaces used (${Math.round((parked / cap) * 100)}%)` : "");
   }
 
   function renderMarkers() {
     for (const p of state.parkings) {
       const m = state.markers.get(p.id);
+      if (!isVisible(p)) {
+        m.remove();   // also closes its popup
+        continue;
+      }
+      if (!map.hasLayer(m)) m.addTo(map);
       m.setIcon(markerIcon(p, readingFor(p.id)));
       // Function content is re-evaluated by Leaflet on open/update, so it never goes stale.
       m.setPopupContent(() => popupHTML(p));
@@ -331,6 +370,18 @@
     render();
   });
 
+  const $lots = document.getElementById("lots-toggle");
+  $lots.checked = state.showLots;
+  $lots.addEventListener("change", () => {
+    state.showLots = $lots.checked;
+    // Keep the URL shareable: the parameter is present only while the lots are shown.
+    const url = new URL(location.href);
+    if (state.showLots) url.searchParams.set(LOTS_PARAM, "1");
+    else url.searchParams.delete(LOTS_PARAM);
+    history.replaceState(history.state, "", url);
+    render();
+  });
+
   $list.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-id]");
     if (!btn) return;
@@ -365,14 +416,17 @@
     state.parkings = parkings.slice().sort((a, b) => a.name.localeCompare(b.name, "lv"));
     const known = new Set(parkings.map((p) => p.id));
     const dates = new Set();
+    // "" -> null (not recorded), digits -> number, anything else -> NaN (invalid row).
+    const count = (v) => (!v ? null : /^\d+$/.test(v) ? Number.parseInt(v, 10) : NaN);
     for (const row of parseCSV(csv)) {
-      const parked = Number.parseInt(row.parked, 10);
+      const parked = count(row.parked);
+      const free = count(row.free);
       if (!known.has(row.parking_id) || !/^\d{4}-\d{2}-\d{2}$/.test(row.date) ||
-          !/^\d+$/.test(row.parked) || !Number.isFinite(parked)) {
+          Number.isNaN(parked) || Number.isNaN(free) || (parked == null && free == null)) {
         console.warn("Skipping invalid observation row", row);
         continue;
       }
-      const o = { date: row.date, time: row.time || "", parked, note: row.note || "" };
+      const o = { date: row.date, time: row.time || "", parked, free, note: row.note || "" };
       if (!state.obsById.has(row.parking_id)) state.obsById.set(row.parking_id, []);
       state.obsById.get(row.parking_id).push(o);
       dates.add(row.date);
@@ -399,9 +453,8 @@
         .on("popupclose", () => {
           if (state.activeId === p.id) state.activeId = null;
           applyHighlight();
-        })
-        .addTo(map);
-      state.markers.set(p.id, m);
+        });
+      state.markers.set(p.id, m);   // added to the map by renderMarkers() if visible
     }
 
     renderSelect();

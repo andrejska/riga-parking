@@ -79,6 +79,11 @@ h1 { font-size: 18px; margin: 0; }
 }
 .legend b.u { border-radius: 50%; }
 .legend b.c { border-radius: 2px; }
+.legend b.p { outline: 1px dashed var(--none); outline-offset: 1px; }
+
+.toggle { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; cursor: pointer; }
+.toggle input { margin: 2px 0 0; accent-color: var(--accent); }
+.toggle small { display: block; color: var(--fg-muted); font-size: 12px; }
 
 .lvl-low  { --lvl: var(--low); }
 .lvl-mid  { --lvl: var(--mid); }
@@ -129,6 +134,7 @@ a { color: var(--accent); }
 }
 .pk-marker.underground { border-radius: 50%; }
 .pk-marker.covered { border-radius: 3px; }
+.pk-marker.surface { border-style: dashed; }
 /* Highlighted from the list (hover/focus) or because its popup is open. */
 .pk-marker.hl {
   transform: scale(1.4);

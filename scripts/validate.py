@@ -13,7 +13,7 @@ from datetime import date
 from pathlib import Path
 
 DATA = Path(__file__).resolve().parent.parent / "data"
-TYPES = {"underground", "multi-storey", "covered"}
+TYPES = {"underground", "multi-storey", "covered", "surface"}
 ID_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 TIME_RE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
 
@@ -59,7 +59,7 @@ for i, p in enumerate(parkings):
 
 with open(DATA / "observations.csv", newline="", encoding="utf-8") as f:
     reader = csv.DictReader(f)
-    expected = ["parking_id", "date", "time", "parked", "note"]
+    expected = ["parking_id", "date", "time", "parked", "free", "note"]
     if reader.fieldnames != expected:
         errors.append(f"observations.csv: header must be {','.join(expected)}")
     seen = set()
@@ -75,16 +75,24 @@ with open(DATA / "observations.csv", newline="", encoding="utf-8") as f:
         t = row.get("time", "")
         if t and not TIME_RE.match(t):
             errors.append(f"{where}: time must be HH:MM (24h) or empty")
-        try:
-            parked = int(row.get("parked", ""))
-            if parked < 0:
-                raise ValueError
-        except ValueError:
-            errors.append(f"{where}: parked must be a whole number >= 0")
+        counts = {}
+        for col in ("parked", "free"):
+            v = (row.get(col) or "").strip()
+            if not v:
+                continue
+            if not (v.isascii() and v.isdigit()):
+                errors.append(f"{where}: {col} must be a whole number >= 0 or empty")
+                continue
+            counts[col] = int(v)
+        if not counts:
+            errors.append(f"{where}: give parked, free or both")
             continue
         cap = by_id.get(pid, {}).get("capacity")
-        if cap and parked > cap:
-            warnings.append(f"{where}: {parked} parked exceeds capacity {cap}")
+        for col, n in counts.items():
+            if cap and n > cap:
+                warnings.append(f"{where}: {n} {col} exceeds capacity {cap}")
+        if cap and len(counts) == 2 and counts["parked"] + counts["free"] != cap:
+            warnings.append(f"{where}: parked + free = {counts['parked'] + counts['free']}, capacity is {cap}")
         key = (pid, row.get("date"), t)
         if key in seen:
             warnings.append(f"{where}: duplicate observation for {pid} {row.get('date')} {t}")

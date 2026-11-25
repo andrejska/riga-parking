@@ -53,14 +53,15 @@
     "address": "Stacijas laukums 2",
     "lat": 56.9478,
     "lon": 24.12156,
-    "capacity": null,
+    "capacity": 248,
     "operator": "EuroPark",
     "access": "public",
     "sources": [
       "https://www.openstreetmap.org/node/30694231",
-      "https://origo.lv/en/amenity-type/access"
+      "https://origo.lv/en/amenity-type/access",
+      "https://www.origo.lv/en/amenity-type/parking/"
     ],
-    "notes": ""
+    "notes": "Capacity from origo.lv: 248 spaces for cars and motorbikes, including spaces for people with reduced mobility and families, and 5 EV charging stations. On-site signs split it into sections P1, P2 and P3; on 2026-11-25 P3 was closed to the public."
   },
   {
     "id": "origo-one",
@@ -127,18 +128,18 @@
   },
   {
     "id": "gertrudes-10",
-    "name": "Ģertrūdes iela 10",
+    "name": "EuroPark Baznīcas multi-storey",
     "type": "multi-storey",
-    "address": "Ģertrūdes iela 10",
+    "address": "Inside the Baznīcas iela 20/22 – Ģertrūdes iela 10 block",
     "lat": 56.95749,
     "lon": 24.12183,
     "capacity": null,
-    "operator": null,
+    "operator": "EuroPark",
     "access": "public",
     "sources": [
       "https://www.openstreetmap.org/node/494257383"
     ],
-    "notes": ""
+    "notes": "Multi-storey garage in the courtyard between Baznīcas iela 20/22 and Ģertrūdes iela 10. Shown as \"Europark Baznīcas daudzstāvu\" in the 2026-11-25 site check. Capacity not published."
   },
   {
     "id": "lielgabalu-4",
@@ -267,5 +268,95 @@
       "https://www.openstreetmap.org/node/14142162411"
     ],
     "notes": "Garage under the Radisson Blu Rīdzene hotel, SNABB zone S17: EUR 2.50/hour, EUR 21/24 h. Formerly for hotel guests only; SNABB says it is now open to everyone. Pay in the Snabb or Mobilly app (hotel guests can pay at reception). Driveway entrance off Kalpaka bulvāris, max height 2 m (per OSM). Capacity not published."
+  },
+  {
+    "id": "berga-bazars",
+    "name": "Berga Bazārs",
+    "type": "surface",
+    "address": "Berga Bazārs courtyard, between Elizabetes and Dzirnavu iela",
+    "lat": 56.95073,
+    "lon": 24.1218,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/way/157394398"
+    ],
+    "notes": "Open-air EuroPark lot inside the Berga Bazārs quarter (OSM ref EZ). Capacity not published."
+  },
+  {
+    "id": "dzirnavu-78-80",
+    "name": "EuroPark Dzirnavu 78/80",
+    "type": "surface",
+    "address": "Dzirnavu iela 78/80 (near Krišjāņa Barona iela)",
+    "lat": 56.95139,
+    "lon": 24.12274,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/way/157394389"
+    ],
+    "notes": "Open-air lot (OSM ref TE). Capacity not published."
+  },
+  {
+    "id": "dzirnavu-brivibas",
+    "name": "EuroPark Dzirnavu / Brīvības",
+    "type": "surface",
+    "address": "Dzirnavu iela, near the corner of Brīvības iela",
+    "lat": 56.95482,
+    "lon": 24.11944,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/way/145933857"
+    ],
+    "notes": "Open-air lot next to Galleria Riga, named \"EuroPark - DB\" in OSM. Capacity not published."
+  },
+  {
+    "id": "brivibas-dzirnavu-baznicas",
+    "name": "EuroPark Brīvības / Dzirnavu / Baznīcas",
+    "type": "surface",
+    "address": "Courtyard between Brīvības, Dzirnavu and Baznīcas iela",
+    "lat": 56.95584,
+    "lon": 24.1193,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/way/158122839"
+    ],
+    "notes": "Open-air courtyard lot (OSM ref BB). Has spaces for people with reduced mobility. Capacity not published."
+  },
+  {
+    "id": "ars-skolas",
+    "name": "ARS Skolas iela",
+    "type": "surface",
+    "address": "Skolas iela, next to the ARS medical centre (Skolas iela 5)",
+    "lat": 56.95712,
+    "lon": 24.11682,
+    "capacity": null,
+    "operator": "Nova Caeli",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/way/164351632"
+    ],
+    "notes": "Open-air lot beside the ARS medical centre (OSM ref SA; operator per OSM). Capacity not published."
+  },
+  {
+    "id": "audeju-gc",
+    "name": "Audēju iela gravel lot",
+    "type": "surface",
+    "address": "Audēju iela, next to Galerija Centrs",
+    "lat": 56.94743,
+    "lon": 24.11208,
+    "capacity": null,
+    "operator": "EuroPark",
+    "access": "public",
+    "sources": [
+      "https://www.openstreetmap.org/way/45099853"
+    ],
+    "notes": "Gravel open-air lot by Galerija Centrs (OSM ref AUD). Capacity not published."
   }
 ]
