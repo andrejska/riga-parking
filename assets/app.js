@@ -249,7 +249,7 @@
             <dt>Counted</dt><dd>${esc(day.weekday)}, ${fmtDate(obs.date)}</dd>
             <dt>Time</dt><dd>${obs.time ? esc(obs.time) : '<span class="muted">not recorded</span>'}</dd>
             <dt>Day type</dt><dd><span class="daytype ${day.off ? "off" : "work"}">${esc(day.label)}</span></dd>
-            ${obs.note ? `<dt>Note</dt><dd>${esc(obs.note)}</dd>` : ""}
+            ${obs.note ? `<dt>Note</dt><dd class="note">${esc(obs.note)}</dd>` : ""}
           </dl>
         </div>`;
     } else {
