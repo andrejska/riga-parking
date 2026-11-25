@@ -111,6 +111,7 @@ h1 { font-size: 18px; margin: 0; }
 .list button.active { border-color: var(--accent); border-left-color: var(--lvl); box-shadow: 0 0 0 1px var(--accent); }
 .list .name { font-weight: 600; }
 .list .meta { font-size: 12px; color: var(--fg-muted); grid-column: 1; }
+.list .meta.when { font-style: italic; }
 .list .val { grid-row: 1 / span 2; grid-column: 2; align-self: center; text-align: right; font-variant-numeric: tabular-nums; }
 .list .val small { display: block; color: var(--fg-muted); font-size: 11px; }
 
